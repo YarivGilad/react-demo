@@ -4,7 +4,16 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const [users, setUsers] = useState([]);
+
+
+  const getUsers = async ()=> {
+    const url = 'https://crud-mongoose.onrender.com/api/users';
+    const response = await fetch(url);
+    const data = await response.json();
+    setUsers(data);
+  }
 
   return (
     <>
@@ -28,6 +37,12 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <button onClick={getUsers}>Get Users</button>
+      <ul>
+        {
+          users.map((user,i)=>(<li key={i}>{user.first_name}</li>))
+        }
+      </ul>
     </>
   )
 }
